@@ -3,43 +3,39 @@
 require 'cgi'
 
 cgi = CGI.new
-   cookie = cgi.cookies
-   p cookie
-   cookie.each do |key, value|
-     p key, value
-   end
-count = cookie["ck1"][0].to_i + 1
-#count = cgi.cookies["ck1"][0].to_i + 1
-   
-new_cookie = CGI::Cookie.new("name" => "ck1",
-                             "value" => count.to_s,
-                             "path" => "/cookie/sample.rhtml",
-                             "expires" => nil,
-                             "secure" => false)
-%>
-<%
-# puts cgi.header("type" => "text/plain", "cookie" => [new_cookie])
-cgi.out({"cookie" => [new_cookie]}){"string"}
-%>
+cookie = cgi.cookies
+count = cookie['ck1'][0].to_i + 1
 
+new_cookie = CGI::Cookie.new({'name' => 'ck1',
+                             'value' => count.to_s,
+                             'path' => '/cookie',
+                             'expires' => nil,
+                             'secure' => false
+                             })
+%>
+<% print cgi.header("type" => "text/plain", "cookie" => [new_cookie]) %>
+<%# cgi.out({"cookie" => [new_cookie]}){'OK'} %>
 <!doctype html>
 <html lang="ja">
   <head>
   <meta charset="utf-8">
   <title>cookie</title>
-</head>
-<body>
-  p ck1                        
-  <p>count => <%= count %></p>
-  <% count += 1 %>
+  </head>
+  <body>
+    <p>ここからが始まりだよ</p>
+    <%= new_cookie.name %>
+    <% count = new_cookie.value.shift.to_i %>
+    <p>count => <%= count %></p>
+    <% count += 1 %>
+  </body>
+</html>
+
 <!--
   <form>
     <input type="text" name="ck1" >
     <input type="submit">
   </form>
 -->
-</body>
-</html>
 
 
 

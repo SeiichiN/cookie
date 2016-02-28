@@ -1,0 +1,43 @@
+<%# coding: utf-8 %>
+
+<%
+require 'cgi'
+
+cgi = CGI.new
+
+# Cookie の受け取り
+count1 = cgi.cookies['count1'].first
+# count2 = cgi.cookies['count2'].first
+
+# 発行する Cookie の定義
+expires = Time.now + 60*60*24*30
+cookies = CGI::Cookie::new({
+        'name' => 'count1',
+        'value' => (count1.to_i + 1).to_s,
+        'expires' => expires,
+        'path' => '/cookie/',})
+#cookies = [
+	# expires あり
+#	CGI::Cookie::new({
+#		'name' => 'count1',
+#		'value' => (count1.to_i + 1).to_s,
+#		'expires' => expires,
+#    'path' => '/cookie/',
+#	}),
+	# expires なし：ブラウザを閉じるまで
+#	CGI::Cookie::new({
+#		'name' => 'count2',
+#		'value' => (count2.to_i + 1).to_s,
+#    'path' => '/cookie/',
+#	}),
+#]
+%>
+<% cgi.out("cookie" => cookies) do %>
+<html>
+  <body>
+    わはははは:<br>
+    count1 => <%= count1 %><br>
+    count2 => <%# count2 %><br>
+  </body>
+</html>
+<% end %>
