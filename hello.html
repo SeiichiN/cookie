@@ -1,0 +1,27 @@
+<%# coding: utf-8 %>
+<%
+	require('cgi')
+	
+	cgi = CGI.new	
+	c = cgi.cookies['name']
+	msg = ""
+	if (c != []) then
+		msg = "クッキー情報：" + c[0]
+	end
+%>
+
+<!DOCTYPE html">
+<html> <head>
+<meta charset="utf-8">
+<title>Ruby!</title>
+</head>
+
+<body>
+<h1>Hello</h1>
+		<p>フォームサンプル</p>
+		<%=msg %>
+		<form method="post" action="../cgi-bin/hello.cgi">
+			<input type="text" name="text1">
+			<input name="submit1" type="submit">
+		</form>
+</body> </html>

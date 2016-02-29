@@ -4,17 +4,12 @@ require 'cgi'
 
 cgi = CGI.new
 cookie = cgi.cookies
-count = cookie['ck1'][0].to_i + 1
+count = cookie['ck1'][0].to_i
 
-new_cookie = CGI::Cookie.new({'name' => 'ck1',
-                             'value' => count.to_s,
-                             'path' => '/cookie',
-                             'expires' => nil,
-                             'secure' => false
-                             })
+print "クッキー無いし！<br>\n" if (count == nil || count == 0)
+
+print Dir::pwd
 %>
-<% print cgi.header("type" => "text/plain", "cookie" => [new_cookie]) %>
-<%# cgi.out({"cookie" => [new_cookie]}){'OK'} %>
 <!doctype html>
 <html lang="ja">
   <head>
@@ -23,19 +18,14 @@ new_cookie = CGI::Cookie.new({'name' => 'ck1',
   </head>
   <body>
     <p>ここからが始まりだよ</p>
-    <%= new_cookie.name %>
-    <% count = new_cookie.value.shift.to_i %>
     <p>count => <%= count %></p>
     <% count += 1 %>
+    <form method="post" action="/cgi-bin/smpl.cgi">
+      <input type="text" name="ck" value="<%= count.to_s %>">
+      <input type="submit">
+    </form>
   </body>
 </html>
-
-<!--
-  <form>
-    <input type="text" name="ck1" >
-    <input type="submit">
-  </form>
--->
 
 
 
