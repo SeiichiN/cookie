@@ -11,6 +11,9 @@ new_cookie = CGI::Cookie.new("name" => "ck1",
                              "expires" => nil,
                              "secure" => false)
 
+puts "Content-Type: text/html; charset=UTF-8"
+puts
+
 print cgi.header("type" => "text/plain", "cookie" => [new_cookie])
 puts count
 

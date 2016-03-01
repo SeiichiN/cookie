@@ -1,0 +1,9 @@
+#! /usr/local/bin/ruby -Ku
+
+require 'cgi'
+
+cgi = CGI.new
+
+str = cgi.params['ck'][0]
+
+print "POST_DATA => #{str}<br>\n"

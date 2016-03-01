@@ -4,6 +4,7 @@ require 'cgi'
 
 cgi = CGI.new
 cookie = cgi.cookies
+p cookie['ck1']
 count = cookie['ck1'][0].to_i
 
 print "クッキー無いし！<br>\n" if (count == nil || count == 0)

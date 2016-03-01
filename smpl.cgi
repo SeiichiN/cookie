@@ -1,21 +1,17 @@
 #!/usr/local/bin/ruby -Ku
+# coding: utf-8
 
-require 'cgi'
+require('cgi')
 
 cgi = CGI.new
-count = cgi['ck']
+count = cgi.params['ck'][0]
+
+puts "Content-Type: text/html; charset=UTF-8"
+puts
 
 print Dir::pwd
 print "<br>\n"
 print "カウント無いし！<br>\n" if (count == nil || count == 0)
 print "<br>\n"
 
-new_cookie = CGI::Cookie.new({'name' => 'ck1',
-                             'value' => count.to_s,
-                             'path' => '/cookie/',
-                             'expires' => nil,
-                             'secure' => false
-                             })
-
-# print cgi.header("type" => "text/plain", "cookie" => [new_cookie]) %>
-cgi.out({"cookie" => [new_cookie], "location" => "../cookie/sample.rhtml"}){'OK'}
+print count
