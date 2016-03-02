@@ -4,14 +4,23 @@
 require('cgi')
 
 cgi = CGI.new
-count = cgi.params['ck'][0]
+count = cgi.params['ck'][0].to_i
+count += 1
+
+new_cookie = CGI::Cookie.new("name" => "ck1",
+                             "value" => count.to_s,
+                             "path" => "/cookie/",
+                             "expires" => nil,
+                             "secure" => false)
+
+print cgi.header("type" => "text/plain", "cookie" => [new_cookie], "Location" => "../cookie/sample.rhtml")
 
 puts "Content-Type: text/html; charset=UTF-8"
 puts
 
-print Dir::pwd
-print "<br>\n"
-print "カウント無いし！<br>\n" if (count == nil || count == 0)
-print "<br>\n"
+# print cgi.header("type" => "text/plain", "cookie" => [new_cookie])
+puts
 
-print count
+# cgi.out({'cookie' => new_cookie, 'location' => '../cookie/sample.rhtml'}){''}
+puts
+
